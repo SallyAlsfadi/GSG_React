@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "./add-form.css";
 import { IStudent } from "../../types";
 import CoursesListForm from "../courses-list-form/courses-list-form.component";
+import { validateStudent } from "../../utils/validation";
 
 const INITIAL_STUDENT = {
   age: 0,
@@ -8,22 +10,37 @@ const INITIAL_STUDENT = {
   id: "",
   isGraduated: false,
   name: "",
+  absents: 0,
 };
+
 interface IProps {
   className?: string;
   onSubmit: (std: IStudent) => void;
 }
-const addForm = (props: IProps) => {
+
+const AddForm = (props: IProps) => {
   const [student, setStudent] = useState<IStudent>(INITIAL_STUDENT);
   const [isOpen, setIsOpen] = useState(false);
+  const [errorsList, setErrorsList] = useState<string[]>([]);
+  useEffect(() => {
+    console.log("Hello from Add Form component!");
+  }, []);
 
   const handleChange = (field: string, value: any) => {
     setStudent({ ...student, [field]: value });
   };
+
   const handleSubmit = () => {
     const newStudent: IStudent = { ...student, id: Date.now().toString() };
-    props.onSubmit(newStudent);
-    handleClear();
+
+    const errors = validateStudent(newStudent);
+    if (errors.length > 0) {
+      setErrorsList(errors);
+    } else {
+      setErrorsList([]);
+      props.onSubmit(newStudent);
+      handleClear();
+    }
   };
 
   const handleClear = () => {
@@ -33,11 +50,12 @@ const addForm = (props: IProps) => {
   const handleCoursesChange = (list: string[]) => {
     setStudent({ ...student, coursesList: list });
   };
+
   return (
     <div className={`wrapper ${props.className} ${isOpen ? "open" : "closed"}`}>
       <button onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <span>&and;</span> : <span>&or;</span>}{" "}
-        {isOpen ? "Hide" : "Show"} Add Form
+        {isOpen ? <span>&and; Close </span> : <span>&or; Open </span>}
+        Add Form
       </button>
       <div className="input">
         <label htmlFor="name">Student Name: </label>
@@ -75,11 +93,25 @@ const addForm = (props: IProps) => {
         />
       </div>
       <div className="Actions">
-        <button onClick={handleSubmit}>Submit</button>
+        <button
+          onClick={handleSubmit}
+          style={{ color: errorsList.length ? "red" : "initial" }}
+          // disabled={errorsList.length > 0}
+        >
+          Submit
+        </button>
         <button onClick={handleClear}>Clear</button>
       </div>
+      {Boolean(errorsList.length) && (
+        <div className="report">
+          <h4>You have the following error/s:</h4>
+          {errorsList.map((error) => (
+            <p key={error}>- {error}</p>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default addForm;
+export default AddForm;
