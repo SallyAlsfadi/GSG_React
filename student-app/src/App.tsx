@@ -61,7 +61,11 @@ function App() {
     setTotalAbsents(totalAbsents);
   }, []);
 
-  const DataChanged = (newData: IStudent[]) => {
+  useEffect(() => {
+    storedata(studentsList);
+  }, [studentsList]);
+
+  const storedata = (newData: IStudent[]) => {
     localStorage.setItem("student-list", JSON.stringify(newData));
   };
 
@@ -69,22 +73,20 @@ function App() {
     const newList = [...studentsList];
     newList.shift();
     setStudentsList(newList);
-    DataChanged(newList);
   };
 
   const handleAbsentChange = (id: string, change: number) => {
     setTotalAbsents(totalAbsents + change);
-    const newList = studentsList.map((std) =>
-      std.id === id ? { ...std, absents: std.absents + change } : std
+
+    setStudentsList(
+      studentsList.map((std) =>
+        std.id === id ? { ...std, absents: std.absents + change } : std
+      )
     );
-    setStudentsList(newList);
-    DataChanged(newList);
   };
 
   const handleAddStudent = (newStudent: IStudent) => {
-    const newData = [newStudent, ...studentsList];
-    setStudentsList(newData);
-    DataChanged(newData);
+    setStudentsList([newStudent, ...studentsList]);
   };
 
   const h1Style = { color: "#69247C", fontSize: "24px" };
