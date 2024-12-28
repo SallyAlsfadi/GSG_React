@@ -3,25 +3,25 @@ import CoursesList from "../courses-list/courses-list.component";
 import { IStudent } from "../../types";
 
 interface IProps extends IStudent {
-  onAbsentChange: (name: string, change: number) => void;
+  onAbsentChange: (id: string, change: number) => void;
 }
 const Student = (props: IProps) => {
-  const [absents, setAbsents] = useState(0);
+  const [absents, setAbsents] = useState(props.absents);
 
   const addAbsent = () => {
     setAbsents(absents + 1);
-    props.onAbsentChange(props.name, +1);
+    props.onAbsentChange(props.id, +1);
   };
   const removeAbsent = () => {
     if (absents >= 1) {
       setAbsents(absents - 1);
-      props.onAbsentChange(props.name, -1);
+      props.onAbsentChange(props.id, -1);
     }
   };
 
   const resetAbsent = () => {
     setAbsents(0);
-    props.onAbsentChange(props.name, -absents);
+    props.onAbsentChange(props.id, -absents);
   };
 
   return (
