@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { IStudent } from "./types";
 
 import Student from "./components/student/student.component";
 import AddForm from "./components/add-form/add-form.component";
+import { json } from "stream/consumers";
 
-const COURSES_LIST: string[] = ["React", "HTML", "CSS"];
-const INITIAL_LIST: Array<IStudent> = [
+//const COURSES_LIST: string[] = ["React", "HTML", "CSS"];
+/*const INITIAL_LIST: Array<IStudent> = [
   {
     id: "2401",
     name: "Ahmad Saeed",
@@ -42,24 +43,48 @@ const INITIAL_LIST: Array<IStudent> = [
     isGraduated: true,
     coursesList: COURSES_LIST,
   },
-];
+]; */
 
 function App() {
-  const [studentsList, setStudentsList] = useState<IStudent[]>(INITIAL_LIST);
+  const [studentsList, setStudentsList] = useState<IStudent[]>([]);
   const [totalAbsents, setTotalAbsents] = useState(0);
+
+  useEffect(() => {
+    console.log("Hello for App!!");
+    const storedData: IStudent[] = JSON.parse(
+      localStorage.getItem("student-list") || "[]"
+    );
+    setStudentsList(storedData);
+    const totalAbsents = storedData.reduce((prev, cur) => {
+      return prev + cur.absents;
+    }, 0);
+    setTotalAbsents(totalAbsents);
+  }, []);
+
+  const DataChanged = (newData: IStudent[]) => {
+    localStorage.setItem("student-list", JSON.stringify(newData));
+  };
 
   const removeFirst = () => {
     const newList = [...studentsList];
-    newList.shift(); // removes the first item
+    newList.shift();
     setStudentsList(newList);
+    DataChanged(newList);
   };
 
-  const handleAbsentChange = (name: string, change: number) => {
+  const handleAbsentChange = (id: string, change: number) => {
     setTotalAbsents(totalAbsents + change);
+    const newList = studentsList.map((std) =>
+      std.id === id ? { ...std, absents: std.absents + change } : std
+    );
+    setStudentsList(newList);
+    DataChanged(newList);
   };
 
   const handleAddStudent = (newStudent: IStudent) => {
-    setStudentsList([newStudent, ...studentsList]);
+    const newData = [newStudent, ...studentsList];
+    setStudentsList(newData);
+    DataChanged(newData);
   };
 
   const h1Style = { color: "#69247C", fontSize: "24px" };
@@ -79,6 +104,7 @@ function App() {
           key={student.id}
           id={student.id}
           name={student.name}
+          absents={student.absents}
           age={student.age}
           isGraduated={student.isGraduated}
           coursesList={student.coursesList}
