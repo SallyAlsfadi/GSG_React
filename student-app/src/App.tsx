@@ -4,7 +4,6 @@ import { IStudent } from "./types";
 
 import Student from "./components/student/student.component";
 import AddForm from "./components/add-form/add-form.component";
-import { json } from "stream/consumers";
 
 //const COURSES_LIST: string[] = ["React", "HTML", "CSS"];
 /*const INITIAL_LIST: Array<IStudent> = [
