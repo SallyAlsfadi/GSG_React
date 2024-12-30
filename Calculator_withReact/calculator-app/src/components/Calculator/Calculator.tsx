@@ -1,4 +1,5 @@
 import React from "react";
+import "./Calculator.css";
 
 interface CalculatorProps {
   onInput: (value: string) => void;
@@ -28,30 +29,14 @@ const Calculator: React.FC<CalculatorProps> = ({
     "C",
   ];
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gap: "10px",
-        maxWidth: "150px",
-        margin: "0 auto",
-      }}
-    >
+    <div className="calculator-container">
       {buttons.map((btn) => (
         <button
           key={btn}
           onClick={() =>
             btn === "=" ? onResult() : btn === "C" ? onClear() : onInput(btn)
           }
-          style={{
-            padding: "15px",
-            borderRadius: "8px",
-            border: "1px solid #ccc",
-            backgroundColor: btn === "=" ? "#28a745" : "#007BFF",
-            color: "white",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
+          className={`calculator-button ${btn === "=" ? "equal" : ""}`}
         >
           {btn}
         </button>
@@ -59,4 +44,5 @@ const Calculator: React.FC<CalculatorProps> = ({
     </div>
   );
 };
+
 export default Calculator;
