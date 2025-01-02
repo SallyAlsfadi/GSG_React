@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React, { useState } from "react";
+import FormComponent from "./components/form/formComponent";
+import { iTodoItem } from "./types";
+const App = () => {
+  const [todos, setTodos] = useState<iTodoItem[]>([]);
+  const addTodo = (newTodo: iTodoItem) => {
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Todo App</h1>
+      <FormComponent onsubmit={addTodo} />
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            {todo.title} {todo.isUrgent && "(Urgent)"}
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
 export default App;
