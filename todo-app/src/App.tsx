@@ -27,7 +27,7 @@ const App = () => {
     setTodos([...todos.slice(0, index), ...todos.slice(index + 1)]);
   };
   return (
-    <div className="App">
+    <div className="app-container">
       <h1>Todo App</h1>
       <FormComponent onsubmit={addTodo} />
       <ul>
