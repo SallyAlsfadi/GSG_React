@@ -1,5 +1,6 @@
 import React from "react";
 import { iTodoItem } from "../../types";
+import "./todoList.css";
 
 import TodoItemComponent from "../todo-item/TodoItemComponent";
 
