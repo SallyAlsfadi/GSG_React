@@ -4,3 +4,9 @@ export interface iTodoItem {
   isDone: boolean;
   isUrgent: boolean;
 }
+
+export interface ItodoItemProps {
+  todo: iTodoItem;
+  onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
+}
