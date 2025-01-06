@@ -1,2 +1,2 @@
 # GSG_React
-A collection of React_tasks
+A collection of React/NextJs_tasks
