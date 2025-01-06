@@ -1,10 +1,17 @@
 import React from "react";
 import TodoItem from "../todo-item/todoitem";
+import "./todolist.css";
+import { todoItem } from "../types";
 
-const TodoList = () => {
+interface IProps {
+  items: todoItem[];
+}
+const TodoList = (props: IProps) => {
   return (
-    <div>
-      <TodoItem />
+    <div className="todolist-wrapper">
+      {props.items.map((item) => (
+        <TodoItem key={item.id} items={item} />
+      ))}
     </div>
   );
 };

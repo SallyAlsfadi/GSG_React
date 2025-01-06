@@ -1,8 +1,8 @@
 import React from "react";
-
+import "./dashboard.css";
 const Dashboard = () => {
   return (
-    <div>
+    <div className="dashboard-wrapper">
       <div>
         <b>20 </b>
         <span>Created tasks!</span>

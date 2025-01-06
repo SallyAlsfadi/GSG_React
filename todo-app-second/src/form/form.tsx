@@ -1,9 +1,26 @@
 import React from "react";
+import "./form.css";
+import { todoItem } from "../types";
 
-const Form = () => {
+interface IProps {
+  onSubmit: (item: todoItem) => void;
+}
+const Form = (props: IProps) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const title = e.currentTarget["task"].value;
+    const isImportant = e.currentTarget["Important"].checked;
+    const newTask: todoItem = {
+      id: Date.now(),
+      title,
+      isImportant,
+      isDone: false,
+    };
+    props.onSubmit(newTask);
+  };
   return (
-    <form className="form-wrapper">
-      <input type="text" name="label" placeholder="Type todo here .." />
+    <form className="form-wrapper" onSubmit={handleSubmit}>
+      <input type="text" name="task" placeholder="Type todo here .." />
 
       <div>
         <label htmlFor="Important">Important!</label>

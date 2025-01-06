@@ -1,13 +1,18 @@
 import { Trash } from "phosphor-react";
 import React from "react";
+import { todoItem } from "../types";
 
-const TodoItem = () => {
+import "./todoitem.css";
+interface IProps {
+  items: todoItem;
+}
+const TodoItem = (props: IProps) => {
   return (
-    <div>
+    <div className="todoItem-wrapper">
       <input type="checkbox" />
-      <span>Type to do here .. </span>
+      <span> </span>
       <span>
-        {" "}
+        {props.items.title}
         <Trash size={20} color="#ff0000" weight="fill" />
       </span>
     </div>
