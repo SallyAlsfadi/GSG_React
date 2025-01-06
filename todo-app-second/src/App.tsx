@@ -13,7 +13,7 @@ function App() {
     <div>
       <h1> Todo App </h1>
       <Form onSubmit={handleNewItem} />
-      <Dashboard />
+      <Dashboard items={todos} />
       <TodoList items={todos} />
     </div>
   );
