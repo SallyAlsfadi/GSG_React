@@ -1,38 +1,92 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Unified App Wrapper */
+.app-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 20px;
+  padding: 30px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+  margin: 40px auto;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-wrapper:hover {
+  transform: scale(1.01);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* App Header */
+.app-wrapper h1 {
+  font-size: 2rem;
+  color: #2c3e50; /* Matches the dark shade of the button */
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Form Submit Button */
+.form-wrapper input[type="submit"] {
+  background: linear-gradient(135deg, #2c3e50, #1abc9c); /* Button gradient */
+  color: #ffffff;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-wrapper input[type="submit"]:hover {
+  background: linear-gradient(135deg, #1abc9c, #2c3e50);
+  box-shadow: 0 8px 12px rgba(26, 188, 156, 0.3);
+}
+
+/* Dashboard Section */
+.dashboard-wrapper div {
+  color: #2c3e50; /* Matches dark button color */
+  font-weight: 500;
+}
+
+.dashboard-wrapper b {
+  color: #1abc9c;
+}
+
+.todoItem-wrapper {
+  background: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #1abc9c;
+  padding: 10px 15px;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.todoItem-wrapper:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.todoItem-wrapper svg {
+  cursor: pointer;
+  color: #e74c3c; /* Red for delete icon */
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.todoItem-wrapper svg:hover {
+  transform: scale(1.2);
+  color: #ff4c4c;
+}
+
+body {
+  background: linear-gradient(to bottom right, #eaf4f4, #f7f7f7);
+  font-family: "Roboto", sans-serif;
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  align-items: center;
 }

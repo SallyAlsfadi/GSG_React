@@ -25,10 +25,9 @@ function App() {
     setTodos(newTodos);
   };
   return (
-    <div>
-      <h1> Todo App </h1>
+    <div className="app-wrapper">
+      <h1> Todo App </h1> <Dashboard items={todos} />
       <Form onSubmit={handleNewItem} />
-      <Dashboard items={todos} />
       <TodoList
         items={todos}
         onToggle={handleTaskToggle}

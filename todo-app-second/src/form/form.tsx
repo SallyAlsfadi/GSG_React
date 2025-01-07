@@ -20,11 +20,10 @@ const Form = (props: IProps) => {
   };
   return (
     <form className="form-wrapper" onSubmit={handleSubmit}>
-      <input type="text" name="task" placeholder="Type todo here .." />
-
       <div>
-        <label htmlFor="Important">Important!</label>
+        <input type="text" name="task" placeholder="Type todo here .." />
         <input type="checkbox" id="Important" />
+        <label htmlFor="Important">Important!</label>
       </div>
       <input type="submit" value="Add Todo" />
     </form>

@@ -1,5 +1,30 @@
 .todolist-wrapper {
-  border: 1px solid black;
-  padding: 10px;
-  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background: #ffffff;
+  box-sizing: border-box;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.todolist-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.todolist-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todolist-wrapper::-webkit-scrollbar-thumb {
+  background: #2c3e50;
+  border-radius: 8px;
+}
+
+.todolist-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }

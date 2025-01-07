@@ -1,5 +1,45 @@
 .todoItem-wrapper {
-  border: 1px solid black;
-  padding: 10px;
-  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.todoItem-wrapper:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.todoItem-wrapper input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #1abc9c;
+  cursor: pointer;
+}
+
+.todoItem-wrapper span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  margin-left: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+.todoItem-wrapper svg {
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.todoItem-wrapper svg:hover {
+  transform: scale(1.2);
+  color: #e74c3c;
 }
