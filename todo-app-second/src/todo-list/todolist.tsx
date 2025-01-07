@@ -5,12 +5,21 @@ import { todoItem } from "../types";
 
 interface IProps {
   items: todoItem[];
+  onToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onDelete: (index: number) => void;
 }
 const TodoList = (props: IProps) => {
   return (
     <div className="todolist-wrapper">
-      {props.items.map((item) => (
-        <TodoItem key={item.id} items={item} />
+      {props.items.map((item, index) => (
+        <TodoItem
+          key={item.id}
+          items={item}
+          onToggle={props.onToggle}
+          onDelete={() => {
+            props.onDelete(index);
+          }}
+        />
       ))}
     </div>
   );

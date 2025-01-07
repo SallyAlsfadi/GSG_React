@@ -9,12 +9,31 @@ function App() {
   const handleNewItem = (item: todoItem) => {
     setTodos([...todos, item]);
   };
+  const handleTaskToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const itemId = e.target.dataset["itemId"];
+    const newTodos = todos.map((todo) =>
+      todo.id === Number(itemId) ? { ...todo, isDone: !todo.isDone } : todo
+    );
+    setTodos(newTodos);
+  };
+  const handleDelete = (index: number) => {
+    const newTodos = [
+      ...todos.slice(0, index),
+      ...todos.slice(index + 1, todos.length),
+    ];
+
+    setTodos(newTodos);
+  };
   return (
     <div>
       <h1> Todo App </h1>
       <Form onSubmit={handleNewItem} />
       <Dashboard items={todos} />
-      <TodoList items={todos} />
+      <TodoList
+        items={todos}
+        onToggle={handleTaskToggle}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }
