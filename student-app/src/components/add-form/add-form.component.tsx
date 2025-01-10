@@ -3,56 +3,24 @@ import "./add-form.css";
 import { IStudent } from "../../types";
 import CoursesListForm from "../courses-list-form/courses-list-form.component";
 import { validateStudent } from "../../utils/validation";
-
-const INITIAL_STUDENT = {
-  age: 0,
-  coursesList: [],
-  id: "",
-  isGraduated: false,
-  name: "",
-  absents: 0,
-};
+import useAddForm from "../../hooks/add-form.hook";
 
 interface IProps {
   className?: string;
   onSubmit: (std: IStudent) => void;
 }
 
-const AddForm = (props: IProps) => {
-  const [student, setStudent] = useState<IStudent>(INITIAL_STUDENT);
+const AddForm = ({ className, onSubmit }: IProps) => {
+  const { student, errorsList, handleChange, handleSubmit, handleClear } =
+    useAddForm(onSubmit);
+
   const [isOpen, setIsOpen] = useState(false);
-  const [errorsList, setErrorsList] = useState<string[]>([]);
-  useEffect(() => {
-    console.log("Hello from Add Form component!");
-  }, []);
-
-  const handleChange = (field: string, value: any) => {
-    setStudent({ ...student, [field]: value });
-  };
-
-  const handleSubmit = () => {
-    const newStudent: IStudent = { ...student, id: Date.now().toString() };
-
-    const errors = validateStudent(newStudent);
-    if (errors.length > 0) {
-      setErrorsList(errors);
-    } else {
-      setErrorsList([]);
-      props.onSubmit(newStudent);
-      handleClear();
-    }
-  };
-
-  const handleClear = () => {
-    setStudent(INITIAL_STUDENT);
-  };
-
   const handleCoursesChange = (list: string[]) => {
-    setStudent({ ...student, coursesList: list });
+    handleChange("coursesList", list);
   };
 
   return (
-    <div className={`wrapper ${props.className} ${isOpen ? "open" : "closed"}`}>
+    <div className={`wrapper ${className} ${isOpen ? "open" : "closed"}`}>
       <button onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? <span>&and; Close </span> : <span>&or; Open </span>}
         Add Form
@@ -96,7 +64,6 @@ const AddForm = (props: IProps) => {
         <button
           onClick={handleSubmit}
           style={{ color: errorsList.length ? "red" : "initial" }}
-          // disabled={errorsList.length > 0}
         >
           Submit
         </button>
