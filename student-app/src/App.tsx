@@ -4,6 +4,7 @@ import { IStudent } from "./types";
 
 import Student from "./components/student/student.component";
 import AddForm from "./components/add-form/add-form.component";
+import useLocalStorage from "./hooks/local-storage.hook";
 
 //const COURSES_LIST: string[] = ["React", "HTML", "CSS"];
 /*const INITIAL_LIST: Array<IStudent> = [
@@ -47,26 +48,18 @@ import AddForm from "./components/add-form/add-form.component";
 function App() {
   const [studentsList, setStudentsList] = useState<IStudent[]>([]);
   const [totalAbsents, setTotalAbsents] = useState(0);
-  // but if we put a console log here it will run when there is any rendering
+
+  const { storedData } = useLocalStorage(studentsList, "students-list");
+
   useEffect(() => {
-    console.log("Hello for App!!"); // first mount first rendering
-    const storedData: IStudent[] = JSON.parse(
-      localStorage.getItem("student-list") || "[]" //depedency array - to only run in the first mount , if there is no d.array it will run each time
-    ); //the benefits ! call api , or load the data from the storage!, ask user to accept cookies
-    setStudentsList(storedData);
-    const totalAbsents = storedData.reduce((prev, cur) => {
+    const stdList: IStudent[] = storedData || [];
+
+    const totalAbsents = stdList.reduce((prev, cur) => {
       return prev + cur.absents;
     }, 0);
+    setStudentsList(stdList || []);
     setTotalAbsents(totalAbsents);
-  }, []);
-
-  useEffect(() => {
-    storedata(studentsList);
-  }, [studentsList]);
-
-  const storedata = (newData: IStudent[]) => {
-    localStorage.setItem("student-list", JSON.stringify(newData));
-  };
+  }, [storedData]);
 
   const removeFirst = () => {
     const newList = [...studentsList];
