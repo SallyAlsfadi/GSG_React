@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./dashboard.css";
 import { todoItem } from "../types";
 
@@ -6,8 +6,14 @@ interface IProps {
   items: todoItem[];
 }
 const Dashboard = (props: IProps) => {
-  const completedTasks = props.items.filter((item) => item.isDone).length;
-  const importantTasks = props.items.filter((item) => item.isImportant).length;
+  const importantTasks = useMemo(() => {
+    return props.items.filter((item) => item.isImportant).length;
+  }, [props.items]);
+
+  const completedTasks = useMemo(() => {
+    return props.items.filter((item) => item.isDone).length;
+  }, [props.items]);
+
   return (
     <div className="dashboard-wrapper">
       <div>
