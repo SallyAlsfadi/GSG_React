@@ -5,7 +5,7 @@ import { todoItem } from "../types";
 interface IProps {
   onSubmit: (item: todoItem) => void;
 }
-const Form = (props: IProps) => {
+const Form = React.memo((props: IProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const title = e.currentTarget["task"].value;
@@ -28,6 +28,6 @@ const Form = (props: IProps) => {
       <input type="submit" value="Add Todo" />
     </form>
   );
-};
+});
 
 export default Form;
