@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useReducer, useRef, useEffect } from "react";
+import coursesListReducer, {
+  initialCoursesListState,
+} from "../../state/courses-list.reducer";
 
 interface IProps {
   value: string[];
@@ -6,23 +9,29 @@ interface IProps {
 }
 
 const CoursesListForm = (props: IProps) => {
-  const [courseList, setCoursesList] = useState<string[]>(props.value);
+  const [courseList, dispatch] = useReducer(
+    coursesListReducer,
+    initialCoursesListState
+  );
   const inRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setCoursesList(props.value);
+    dispatch({ type: "SET_COURSES", courses: props.value });
   }, [props.value]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const newCourse = event.currentTarget["courseName"].value;
-    const newList = [...courseList, newCourse];
-    setCoursesList(newList);
-    props.onSubmit(newList);
+    const newCourse = event.currentTarget["courseName"].value.trim();
+
+    if (newCourse) {
+      dispatch({ type: "ADD_COURSE", course: newCourse });
+      props.onSubmit([...courseList, newCourse]);
+    }
+
+    if (inRef.current) {
+      inRef.current.value = "";
+    }
   };
-  if (inRef.current) {
-    inRef.current.value = "";
-  }
 
   return (
     <div className="addCourseForm">
