@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useReducer, useState } from "react";
 import "./add-form.css";
 import { IStudent } from "../../types";
 import CoursesListForm from "../courses-list-form/courses-list-form.component";
 import { validateStudent } from "../../utils/validation";
-import useAddForm from "../../hooks/add-form.hook";
+import addFormReducer, {
+  initialAddFormState,
+} from "../../state/add-form.reducer";
 
 interface IProps {
   className?: string;
@@ -11,12 +13,31 @@ interface IProps {
 }
 
 const AddForm = ({ className, onSubmit }: IProps) => {
-  const { student, errorsList, handleChange, handleSubmit, handleClear } =
-    useAddForm(onSubmit);
+  const [state, dispatch] = useReducer(addFormReducer, initialAddFormState);
+  const { student, errorsList } = state;
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleChange = (field: keyof IStudent, value: any) => {
+    dispatch({ type: "UPDATE_STUDENT_FIELD", field, value });
+  };
+
   const handleCoursesChange = (list: string[]) => {
     handleChange("coursesList", list);
+  };
+
+  const handleSubmit = () => {
+    const errors = validateStudent(student);
+    if (errors.length) {
+      dispatch({ type: "SET_ERRORS_LIST", errors });
+    } else {
+      onSubmit(student);
+      dispatch({ type: "RESET_FORM" });
+    }
+  };
+
+  const handleClear = () => {
+    dispatch({ type: "RESET_FORM" });
   };
 
   return (
