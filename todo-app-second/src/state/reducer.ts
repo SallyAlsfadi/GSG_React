@@ -5,8 +5,12 @@ interface IState {
   todos: todoItem[];
   userName: string;
 }
-
-const reducer = (state: IState, action: any): IState => {
+type Action =
+  | { type: "INIT_TODOS"; payload: todoItem[] }
+  | { type: "ADD_TODO"; payload: todoItem }
+  | { type: "REMOVE_TODO"; payload: number }
+  | { type: "TOGGLE_TODO"; payload: number };
+const reducer = (state: IState, action: Action): IState => {
   switch (action.type) {
     /* case "INIT_TODOS": {
       if (state.todos.length === 0) {
